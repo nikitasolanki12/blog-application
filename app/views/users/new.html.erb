@@ -1,0 +1,12 @@
+
+<h2>Login</h2>
+
+<%= form_with(method: :post) do |form| %>
+  <%= form.label :email %>
+  <%= form.email_field :email, required: true %>
+
+  <%= form.label :password %>
+  <%= form.password_field :password, required: true %>
+
+  <%= form.submit 'Log In' %>
+<% end %>

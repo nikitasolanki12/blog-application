@@ -1,0 +1,30 @@
+
+<div class="container">
+  <h2>Edit your blog</h2>
+
+  <div class="col-lg-6 offset-md-3  ">
+    <%= form_with model: @blog, url: blog_path(@blog), method: :patch, local:false do |form| %>
+     <br />
+    <div class="form-group clearfix">
+      <%= form.label :Title %>
+      <%= form.text_field :title, class: 'form-control'%>
+    </div>
+    <br />
+
+    <div class="form-group">
+      <%= form.label :content %>
+      <%= form.text_area :content, class: 'form-control' , placeholder:'Your content...' , id: "exampleTextarea", rows: "3" %>
+    </div></br>
+
+
+    <div class = "form-group">
+     <%= form.label :publication_date %>
+     <%= form.date_field :publication_date %>
+    </div></br>
+
+    <div class="form-group clearfix">
+     <%= form.submit id:'postbutton', class: 'btn btn-primary btn-lg float-end'%>
+    </div>
+  <% end %>     
+  </div>
+</div>

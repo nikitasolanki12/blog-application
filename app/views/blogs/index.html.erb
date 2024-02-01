@@ -1,0 +1,60 @@
+
+
+<div class="col-lg-6 offset-md-3  ">
+    <%= render 'form' %>
+</div><br />
+
+<%= text_field_tag :title_filter, params[:title_filter], placeholder: 'Title' %>
+<%= text_field_tag :date_filter, params[:date_filter], id: 'date-picker', placeholder: 'Publication Date' %>
+
+<%= button_tag 'Filter', id: 'filter-btn' %></br>
+
+<table>
+  <!-- Your blog entries display code here -->
+   <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Publication Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @blogs.each do |blog| %>
+      <tr>
+        <td><%= blog.title %></td>
+        <td><%= blog.content %></td>
+        <td><%= blog.publication_date %></td>
+        <td>
+          <%= link_to 'Edit', edit_blog_path(blog) %>
+          <%= button_to 'Delete', blog, method: :delete ,
+          :remote => true, data: { confirm: "Are you sure?" }, class:"btn btn-sm btn-outline-primary"%><br>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= button_to 'Logout', logout_path, method: :delete, form: { class: 'logout-form' } %>
+
+<script>
+  document.addEventListener('turbolinks:load', function () {
+    flatpickr('#date-picker', {
+      dateFormat: 'Y-m-d',
+      altInput: true,
+      altFormat: 'F j, Y',
+    });
+
+    $('#filter-btn').click(function () {
+      var titleFilter = $('#title-filter').val();
+      var dateFilter = $('#date-picker').val();
+      $.ajax({
+        url: '<%= blogs_path %>',
+        type: 'GET',
+        data: { title_filter: titleFilter, date_filter: dateFilter },
+        success: function (data) {
+          $('#blogs-container').html(data);
+        },
+      });
+    });
+  });
+</script>
